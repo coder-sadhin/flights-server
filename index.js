@@ -22,18 +22,21 @@ app.get('/routes', (req, res) => {
 app.post('/flights', (req, res) => {
     const { from, to, date } = req.body;
     const offerFlight = flights[0].flightOffer;
-    // console.log(from, to, date);
     const matched = offerFlight.filter(flight => flight.itineraries[0].segments[0].departure.iataCode === from &&
         flight.itineraries[0].segments[0].arrival.iataCode === to
         && flight.itineraries[0].segments[0].departure.at.includes(date) === true);
-    // console.log(matched);
-    // console.log("match hoyeche");
     if (matched.length > 0) {
         res.send(matched)
     }
     else {
         res.send([])
     }
+})
+
+app.get('/allflights', (req, res) => {
+    const offerFlight = flights[0].flightOffer;
+    res.send(offerFlight)
+    // console.log(offerFlight);
 })
 
 app.listen(port, () => {
